@@ -20,14 +20,22 @@
   }
 
   class MainView extends AbstractView {
-    constructor() {
+    state = {
+      list: [],
+      loading: false,
+      searchQuery: undefined,
+      offset: 0,
+    };
+
+    constructor(appState) {
       super();
+      this.appState = appState;
       this.setTitle("Поиск книг");
     }
 
     render() {
       const main = document.createElement("div");
-      main.innerHTML = "Test";
+      main.innerHTML = `Число книг: ${this.appState.favorites.length}`;
       this.app.innerHTML = "";
       this.app.append(main);
     }
@@ -35,6 +43,9 @@
 
   class App {
     routes = [{ path: "", view: MainView }];
+    appState = {
+      favorites: [],
+    };
 
     constructor() {
       window.addEventListener("hashchange", this.route.bind(this));
@@ -47,7 +58,7 @@
       }
 
       const view = this.routes.find((r) => r.path === location.hash).view;
-      this.currentView = new view();
+      this.currentView = new view(this.appState);
       this.currentView.render();
     }
   }
