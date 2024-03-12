@@ -18,9 +18,9 @@ export class Search extends DivComponent {
     <div class="search__wrapper">
     <input
       type="text"
+      value="${this.state.searchQuery ? this.state.searchQuery : ""}"
       placeholder="Найти книгу или автора..."
       class="search__input"
-      value="${this.state.searchQuery ? this.state.searchQuery : " "}"
     />
     <img src="/static/search-black.svg" alt="Search icon" />
   </div>
@@ -36,5 +36,6 @@ export class Search extends DivComponent {
         this.search();
       }
     });
+    return this.el;
   }
 }
