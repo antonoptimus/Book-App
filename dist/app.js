@@ -1146,6 +1146,26 @@
     }
   }
 
+  class CardList extends DivComponent {
+    constructor(appState, parentState) {
+      super();
+      this.appState = appState;
+      this.parentState = parentState;
+    }
+
+    render() {
+      if (this.parentState.loading) {
+        this.el.innerHTML = '<div class="card_list__loader">Loading...</div>';
+        return this.el;
+      }
+      this.el.classList.add("card_list");
+      this.el.innerHTML = `
+      <h1>Найдено книг - ${this.parentState.list.length}</h1>
+    `;
+      return this.el;
+    }
+  }
+
   class Search extends DivComponent {
     constructor(state) {
       super();
@@ -1185,7 +1205,6 @@
   }
 
   class MainView extends AbstractView {
-    // Определяем состояние представления по умолчанию.
     state = {
       list: [],
       loading: false,
@@ -1193,21 +1212,18 @@
       offset: 0,
     };
 
-    // Конструктор класса MainView, принимающий состояние приложения appState.
     constructor(appState) {
-      // Вызываем конструктор родительского класса (AbstractView).
       super();
-      // Присваиваем переданное состояние приложения переменной appState.
       this.appState = appState;
-      // Создаём прокси для отслеживания изменений состояния приложения с помощью библиотеки on-change.
       this.appState = onChange(this.appState, this.appStateHook.bind(this));
-      this.state = onChange(this.state, this.appStateHook.bind(this));
-      // Устанавливаем заголовок страницы.
+      this.state = onChange(this.state, this.stateHook.bind(this));
       this.setTitle("Поиск книг");
     }
 
-    // Метод обратного вызова для отслеживания изменений в состоянии приложения.
     appStateHook(path) {
+      if (path === "favorites") {
+        console.log(path);
+      }
     }
 
     async stateHook(path) {
@@ -1218,7 +1234,12 @@
           this.state.offset
         );
         this.state.loading = false;
-        this.state.list = data.docs;
+        console.log(data);
+        // this.state.list = data.docs;
+      }
+
+      if (path === "list" || path === "loading") {
+        this.render();
       }
     }
 
@@ -1229,14 +1250,11 @@
       return res.json();
     }
 
-    // Метод отрисовки представления.
     render() {
-      // Создаём основной контейнер для представления.
       const main = document.createElement("div");
       main.append(new Search(this.state).render());
-      // Очищаем содержимое представления.
+      main.append(new CardList(this.appState, this.state).render());
       this.app.innerHTML = "";
-      // Добавляем созданный контейнер в корневой элемент представления.
       this.app.append(main);
       this.renderHeader();
     }
