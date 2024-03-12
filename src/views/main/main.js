@@ -20,6 +20,7 @@ export class MainView extends AbstractView {
     this.appState = appState;
     // Создаём прокси для отслеживания изменений состояния приложения с помощью библиотеки on-change.
     this.appState = onChange(this.appState, this.appStateHook.bind(this));
+    this.state = onChange(this.state, this.appStateHook.bind(this));
     // Устанавливаем заголовок страницы.
     this.setTitle("Поиск книг");
   }
@@ -31,6 +32,25 @@ export class MainView extends AbstractView {
       // Например, можно вызвать метод render() для перерисовки представления.
       // this.render();
     }
+  }
+
+  async stateHook(path) {
+    if (path === "searchQuery") {
+      this.state.loading = true;
+      const data = await this.loadList(
+        this.state.searchQuery,
+        this.state.offset
+      );
+      this.state.loading = false;
+      this.state.list = data.docs;
+    }
+  }
+
+  async loadList(q, offset) {
+    const res = await fetch(
+      `https://openlibrary.org/search.json?q=${q}&offset=${offset}`
+    );
+    return res.json();
   }
 
   // Метод отрисовки представления.
