@@ -1,6 +1,7 @@
 import { AbstractView } from "../../common/view.js";
 import onChange from "on-change";
 import { Header } from "../../components/header/header.js";
+import { Search } from "../../components/search/search.js";
 
 export class MainView extends AbstractView {
   // Определяем состояние представления по умолчанию.
@@ -36,6 +37,7 @@ export class MainView extends AbstractView {
   render() {
     // Создаём основной контейнер для представления.
     const main = document.createElement("div");
+    main.append(new Search(this.state).render());
     // Очищаем содержимое представления.
     this.app.innerHTML = "";
     // Добавляем созданный контейнер в корневой элемент представления.

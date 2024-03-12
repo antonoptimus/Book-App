@@ -1123,7 +1123,6 @@
     }
 
     render() {
-      this.el.innerHTML = "";
       this.el.classList.add("header");
       this.el.innerHTML = `
     <div>
@@ -1142,6 +1141,32 @@
         </div>
       </a>
     </div>
+    `;
+      return this.el;
+    }
+  }
+
+  class Search extends DivComponent {
+    constructor(state) {
+      super();
+      this.state = state;
+    }
+
+    render() {
+      this.el.classList.add("search");
+      this.el.innerHTML = `
+    <div class="search__wrapper">
+    <input
+      type="text"
+      placeholder="Найти книгу или автора..."
+      class="search__input"
+      value="${this.state.searchQuery ? this.state.searchQuery : ""}"
+    />
+    <img src="/static/search-black.svg" alt="Search icon" />
+  </div>
+  <button aria-label="Search">
+    <img src="/static/search-white.svg" alt="Search icon" />
+  </button>
     `;
       return this.el;
     }
@@ -1176,6 +1201,7 @@
     render() {
       // Создаём основной контейнер для представления.
       const main = document.createElement("div");
+      main.append(new Search(this.state).render());
       // Очищаем содержимое представления.
       this.app.innerHTML = "";
       // Добавляем созданный контейнер в корневой элемент представления.
