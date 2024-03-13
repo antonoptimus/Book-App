@@ -1236,6 +1236,7 @@
 	  }
 	}
 
+<<<<<<< HEAD
 	class FavoritesView extends AbstractView {
 	  constructor(appState) {
 	    super();
@@ -1243,6 +1244,33 @@
 	    this.appState = onChange(this.appState, this.appStateHook.bind(this));
 	    this.setTitle("Избранное");
 	  }
+=======
+  class CardList extends DivComponent {
+    constructor(appState, parentState) {
+      super();
+      this.appState = appState;
+      this.parentState = parentState;
+    }
+
+    render() {
+      if (this.parentState.loading) {
+        this.el.innerHTML = '<div class="card_list__loader">Loading...</div>';
+        return this.el;
+      }
+      this.el.classList.add("card_list");
+      this.el.innerHTML = `
+      <h1>Найдено книг - ${this.parentState.list.length}</h1>
+    `;
+      return this.el;
+    }
+  }
+
+  class Search extends DivComponent {
+    constructor(state) {
+      super();
+      this.state = state;
+    }
+>>>>>>> 9c133a6f44191ab0a7a340dee5973d601edfb68f
 
 	  destroy() {
 	    onChange.unsubscribe(this.appState);
@@ -1312,6 +1340,7 @@
 	  }
 	}
 
+<<<<<<< HEAD
 	class MainView extends AbstractView {
 	  state = {
 	    list: [],
@@ -1339,6 +1368,46 @@
 	      this.render();
 	    }
 	  }
+=======
+  class MainView extends AbstractView {
+    state = {
+      list: [],
+      loading: false,
+      searchQuery: undefined,
+      offset: 0,
+    };
+
+    constructor(appState) {
+      super();
+      this.appState = appState;
+      this.appState = onChange(this.appState, this.appStateHook.bind(this));
+      this.state = onChange(this.state, this.stateHook.bind(this));
+      this.setTitle("Поиск книг");
+    }
+
+    appStateHook(path) {
+      if (path === "favorites") {
+        console.log(path);
+      }
+    }
+
+    async stateHook(path) {
+      if (path === "searchQuery") {
+        this.state.loading = true;
+        const data = await this.loadList(
+          this.state.searchQuery,
+          this.state.offset
+        );
+        this.state.loading = false;
+        console.log(data);
+        // this.state.list = data.docs;
+      }
+
+      if (path === "list" || path === "loading") {
+        this.render();
+      }
+    }
+>>>>>>> 9c133a6f44191ab0a7a340dee5973d601edfb68f
 
 	  async stateHook(path) {
 	    if (path === "searchQuery") {
@@ -1352,10 +1421,21 @@
 	      this.state.list = data.docs;
 	    }
 
+<<<<<<< HEAD
 	    if (path === "list" || path === "loading") {
 	      this.render();
 	    }
 	  }
+=======
+    render() {
+      const main = document.createElement("div");
+      main.append(new Search(this.state).render());
+      main.append(new CardList(this.appState, this.state).render());
+      this.app.innerHTML = "";
+      this.app.append(main);
+      this.renderHeader();
+    }
+>>>>>>> 9c133a6f44191ab0a7a340dee5973d601edfb68f
 
 	  async loadList(q, offset) {
 	    const res = await fetch(

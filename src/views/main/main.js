@@ -21,6 +21,7 @@ export class MainView extends AbstractView {
     this.setTitle("Поиск книг");
   }
 
+<<<<<<< HEAD
   destroy() {
     onChange.unsubscribe(this.appState);
     onChange.unsubscribe(this.state);
@@ -29,6 +30,11 @@ export class MainView extends AbstractView {
   appStateHook(path) {
     if (path === "favorites") {
       this.render();
+=======
+  appStateHook(path) {
+    if (path === "favorites") {
+      console.log(path);
+>>>>>>> 9c133a6f44191ab0a7a340dee5973d601edfb68f
     }
   }
 
@@ -40,8 +46,17 @@ export class MainView extends AbstractView {
         this.state.offset
       );
       this.state.loading = false;
+<<<<<<< HEAD
       this.state.numFound = data.numFound;
       this.state.list = data.docs;
+=======
+      console.log(data)
+      // this.state.list = data.docs;
+    }
+
+    if (path === "list" || path === "loading") {
+      this.render();
+>>>>>>> 9c133a6f44191ab0a7a340dee5973d601edfb68f
     }
 
     if (path === "list" || path === "loading") {
