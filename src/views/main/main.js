@@ -1,8 +1,8 @@
-import { AbstractView } from "../../../common/view.js";
+import { AbstractView } from "../../common/view.js";
 import onChange from "on-change";
-import { Header } from "../../../components/header/header.js";
-import { CardList } from "../../../components/cardList/cardList.js";
-import { Search } from "../../../components/search/search.js";
+import { Header } from "../../components/header/header.js";
+import { CardList } from "../../components/cardList/cardList.js";
+import { Search } from "../../components/search/search.js";
 
 export class MainView extends AbstractView {
   state = {

@@ -1,4 +1,4 @@
-import { DivComponent } from "../../views/main/div-component";
+import { DivComponent } from "../../common/div-component";
 import "./header.css";
 
 export class Header extends DivComponent {
@@ -14,11 +14,11 @@ export class Header extends DivComponent {
       <img src="/static/logo.svg" alt="Logotype" />
     </div>
     <div class="menu">
-      <a href="#" class="menu__item">
+      <a class="menu__item" href="#">
         <img src="/static/search-black.svg" alt="Search icon" />
         <p>Поиск книг</p>
       </a>
-      <a href="#favorites" class="menu__item">
+      <a class="menu__item" href="#favorites">
         <img src="/static/favorites.svg" alt="Favorites icon" />
         <p>Избранное</p>
         <div class="menu__counter">

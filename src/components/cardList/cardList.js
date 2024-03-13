@@ -1,4 +1,4 @@
-import { DivComponent } from "../../views/main/div-component";
+import { DivComponent } from "../../common/div-component";
 import { Card } from "../card/card";
 import "./cardList.css";
 

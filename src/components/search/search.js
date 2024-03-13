@@ -1,4 +1,4 @@
-import { DivComponent } from "../../views/main/div-component";
+import { DivComponent } from "../../common/div-component";
 import "./search.css";
 
 export class Search extends DivComponent {

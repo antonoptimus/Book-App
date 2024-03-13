@@ -1,7 +1,7 @@
 import onChange from "on-change";
-import { AbstractView } from "../../../common/view.js";
-import { CardList } from "../../../components/cardList/cardList.js";
-import { Header } from "../../../components/header/header.js";
+import { AbstractView } from "../../common/view.js";
+import { CardList } from "../../components/cardList/cardList.js";
+import { Header } from "../../components/header/header.js";
 
 export class FavoritesView extends AbstractView {
   constructor(appState) {
@@ -24,7 +24,7 @@ export class FavoritesView extends AbstractView {
   render() {
     const main = document.createElement("div");
     main.innerHTML = `
-    <h1>Избранные книги - ${this.parentState.numFound}</h1>
+    <h1>Избранные книги</h1>
   `;
     main.append(
       new CardList(this.appState, { list: this.appState.favorites }).render()
